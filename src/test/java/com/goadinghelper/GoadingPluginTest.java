@@ -1,13 +1,13 @@
-package com.example;
+package com.goadinghelper;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class GoadingPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(GoadingPlugin.class);
 		RuneLite.main(args);
 	}
 }
