@@ -148,6 +148,8 @@ public class GoadingPlugin extends Plugin
 		if (this.isGoadingActive())
 		{
 			this.overlayManager.add(this.radiusOverlay);
+		} else {
+			this.overlayManager.remove(this.radiusOverlay);
 		}
 		if (this.isGoadingActive() || !this.hasGoadingPotion || !config.reminderEnabled())
 		{
@@ -157,7 +159,6 @@ public class GoadingPlugin extends Plugin
 		if (!this.overlayManager.anyMatch(o -> o instanceof GoadingOverlay))
 		{
 			this.overlayManager.add(this.overlay);
-			this.overlayManager.remove(this.radiusOverlay);
 		}
 	}
 
