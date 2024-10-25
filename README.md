@@ -11,7 +11,6 @@ A plugin that provides additional information for your goading potion
 3. Runelite notifications on potion expiry (optional sound/screen flash)
 4. A tick timer which shows you the tick which the goading potion pulls aggression
 
-## Example
 This was heavily inspired by the following plugins:
 
 
