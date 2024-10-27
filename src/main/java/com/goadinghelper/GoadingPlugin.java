@@ -136,9 +136,9 @@ public class GoadingPlugin extends Plugin
 	private void onGoadingPotionExpired()
 	{
 		this.updateOverlay();
-		if (config.notificationEnabled())
+		if (config.getNotification().isEnabled())
 		{
-			notifier.notify("Your goading potion has expired");
+			notifier.notify(config.getNotification(), "Your goading potion has expired");
 		}
 
 	}

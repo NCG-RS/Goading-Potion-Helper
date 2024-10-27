@@ -54,9 +54,9 @@ public interface GoadingConfig extends Config
 		position = 3,
 		section = notificationSection
 	)
-	default boolean notificationEnabled()
+	default Notification getNotification()
 	{
-		return true;
+		return Notification.OFF;
 	}
 
 	@ConfigItem(
