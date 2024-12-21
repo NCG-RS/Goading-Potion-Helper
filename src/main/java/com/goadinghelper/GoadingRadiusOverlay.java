@@ -92,13 +92,30 @@ public class GoadingRadiusOverlay extends OverlayPanel
 
 		// Corner 1: (startX, startY)
 		moveTo(path, startX, startY, z);
+
 		// Corner 2: (startX + diameter, startY)
-		lineTo(path, startX + diameter, startY, z);
+		for (int i = 1; i <= diameter; i++)
+		{
+			lineTo(path, startX + i, startY, z);
+		}
+
 		// Corner 3: (startX + diameter, startY + diameter)
-		lineTo(path, startX + diameter, startY + diameter, z);
+		for (int i = 1; i <= diameter; i++)
+		{
+			lineTo(path, startX + diameter, startY + i, z);
+		}
+
 		// Corner 4: (startX, startY + diameter)
-		lineTo(path, startX, startY + diameter, z);
+		for (int i = 1; i <= diameter; i++)
+		{
+			lineTo(path, startX + diameter - i, startY + diameter, z);
+		}
+
 		// Close the square back to Corner 1
+		for (int i = 1; i <= diameter-1; i++)
+		{
+			lineTo(path, startX, startY + diameter - i, z);
+		}
 		path.closePath();
 
 		return path;
