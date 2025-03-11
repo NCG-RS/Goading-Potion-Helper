@@ -6,6 +6,7 @@ import net.runelite.api.Player;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.config.Keybind;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPanel;
@@ -22,12 +23,14 @@ public class GoadingRadiusOverlay extends OverlayPanel
 
 	private final GoadingConfig config;
 	private final Client client;
+	private final GoadingPlugin plugin;
 
 	@Inject
-	private GoadingRadiusOverlay(GoadingConfig config, Client client)
+	private GoadingRadiusOverlay(GoadingConfig config, Client client, GoadingPlugin plugin)
 	{
 		this.config = config;
 		this.client = client;
+		this.plugin = plugin;
 		setPosition(OverlayPosition.DYNAMIC);
 		setPriority(Overlay.PRIORITY_LOW);
 		setLayer(OverlayLayer.ABOVE_SCENE);
@@ -36,8 +39,8 @@ public class GoadingRadiusOverlay extends OverlayPanel
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-
-		if (!config.radiusEnabled())
+		//Ensure radius overlay can't be toggled off when the toggle hotkey isn't set
+		if (!config.radiusEnabled() || (plugin.isRadiusToggled() &&  !Keybind.NOT_SET.equals(config.radiusToggleHotkey())))
 		{
 			return null;
 		}

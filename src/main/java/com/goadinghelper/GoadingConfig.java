@@ -83,10 +83,22 @@ public interface GoadingConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "radiusToggleHotkey",
+		name = "Goading Radius Hotkey",
+		description = "Hotkey to toggle goading radius",
+		position = 2,
+		section = radiusSection
+	)
+	default Keybind radiusToggleHotkey()
+	{
+		return Keybind.NOT_SET;
+	}
+
+	@ConfigItem(
 		keyName = "borderWidth",
 		name = "Border width",
 		description = "Goading radius border width",
-		position = 2,
+		position = 3,
 		section = radiusSection
 	)
 	default int borderWidth()

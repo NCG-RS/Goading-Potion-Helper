@@ -1,7 +1,9 @@
 package com.goadinghelper;
 
 import com.google.inject.Provides;
+import java.awt.event.KeyEvent;
 import javax.inject.Inject;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.GameTick;
@@ -12,12 +14,14 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
+import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
 import java.util.Arrays;
+import net.runelite.client.util.HotkeyListener;
 
 @Slf4j
 @PluginDescriptor(
@@ -66,15 +70,20 @@ public class GoadingPlugin extends Plugin
 
 	private boolean hasGoadingPotion = false;
 
+	@Inject
+	private KeyManager keyManager;
+
+	@Getter
+	private boolean radiusToggled = false;
+
 	@Override
 	protected void startUp() throws Exception
 	{
 		this.infoBox = new GoadingInfobox(this);
 		this.infoBoxManager.addInfoBox(this.infoBox);
-
 		this.nextGoadingTicks = NO_GOADING;
-
 		this.infoBox.setImage(itemManager.getImage(ItemID.GOADING_POTION4));
+		this.keyManager.registerKeyListener(toggleRadiusHotkeyListener);
 	}
 
 	@Override
@@ -83,6 +92,7 @@ public class GoadingPlugin extends Plugin
 		this.infoBoxManager.removeInfoBox(this.infoBox);
 		this.overlayManager.remove(this.overlay);
 		this.overlayManager.remove(this.radiusOverlay);
+		this.keyManager.unregisterKeyListener(toggleRadiusHotkeyListener);
 	}
 
 	@Subscribe
@@ -181,4 +191,25 @@ public class GoadingPlugin extends Plugin
 	{
 		return configManager.getConfig(GoadingConfig.class);
 	}
+
+	private final HotkeyListener toggleRadiusHotkeyListener = new HotkeyListener(() -> config.radiusToggleHotkey() )
+	{
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+			if (config.radiusToggleHotkey().matches(e))
+			{
+				radiusToggled = !radiusToggled;
+				e.consume();
+			}
+		 }
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			hotkeyReleased();
+		}
+
+	};
+
 }
