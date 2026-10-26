@@ -80,8 +80,9 @@ public class GoadingRadiusOverlay extends OverlayPanel
 			return null; // Player location not available, skip render
 		}
 
-		// Get world position
-		WorldPoint worldPoint = WorldPoint.fromLocalInstance(client, playerLocation);
+		// Get world position in the loaded scene's coordinates. Not fromLocalInstance: inside an instance
+		// (e.g. Barbarian Assault) that returns template coordinates, which LocalPoint.fromWorld can't map back
+		WorldPoint worldPoint = WorldPoint.fromLocal(client, playerLocation);
 		if (worldPoint == null)
 		{
 			return null; // World position not available, skip render
